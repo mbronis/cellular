@@ -28,13 +28,18 @@ class Cave:
         self.rect = self.generate_map_rect()
         self.fill_map_random()
     
-    def generate_map(self) -> np.ndarray:
+    @staticmethod
+    def generate_map() -> np.ndarray:
         return np.empty((WIDTH, HEIGHT))
+    
+    @staticmethod
+    def get_cell_rect(x, y):
+        return pygame.Rect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE)
 
     def generate_map_rect(self):
         rect = dict()
         for x, y in itertools.product(range(WIDTH), range(HEIGHT)):
-            rect[(x, y)] = get_cell_rect(x, y)
+            rect[(x, y)] = self.get_cell_rect(x, y)
         
         return rect
 
@@ -76,9 +81,6 @@ def draw_cave(screen, cave):
     for x, y in itertools.product(range(WIDTH), range(HEIGHT)):
         screen.fill(colors[cave.map[x, y]], cave.rect[(x, y)])
 
-def get_cell_rect(x, y):
-    return pygame.Rect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE)
-
 def reset_cave(screen):
     cave = Cave()
     draw_cave(screen, cave)
@@ -93,12 +95,11 @@ def smooth_cave(screen, cave):
 
 def main():
     pygame.init()
+    pygame.display.set_caption(TITLE)
 
     screen = pygame.display.set_mode((WIDTH * TILESIZE, HEIGHT * TILESIZE))
-    pygame.display.set_caption(TITLE)
-    
     clock = pygame.time.Clock()
-
+    
     cave = reset_cave(screen)
     while True:
         clock.tick(FPS)
