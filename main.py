@@ -10,14 +10,17 @@ from pygame.locals import QUIT, MOUSEBUTTONDOWN
 
 
 TITLE = 'A cellular automata game'
-WIDTH = 60
-HEIGHT = 40
-TILESIZE = 15
 FPS = 10
+
+WIDTH = 120
+HEIGHT = 60
+TILESIZE = 10
+
+FILL = 0.4
 
 
 class Cave:
-    def __init__(self, fill: float = 0.4, seed: int = None) -> None:
+    def __init__(self, fill: float = FILL, seed: int = None) -> None:
         self.fill = fill
         self.seed = seed
 
